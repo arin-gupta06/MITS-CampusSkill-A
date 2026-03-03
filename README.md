@@ -252,6 +252,4 @@ This project is licensed under the MIT License.
 
 ---
 
-Made with ❤️ for MITS Campus
-
-🌐 [Visit CampusSkill](http://localhost:5173)
+Made with ❤️ for MITS CampusSkill
