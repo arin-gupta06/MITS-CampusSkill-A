@@ -4,11 +4,13 @@ import { getMentors } from '../services/mentorService';
 import Loading from '../components/Loading';
 import Avatar from '../components/Avatar';
 import { StarIcon, CheckBadgeIcon } from '@heroicons/react/24/solid';
+import { Search } from 'lucide-react';
 
 const Mentors = () => {
   const [mentors, setMentors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchMentors = async () => {
@@ -25,13 +27,19 @@ const Mentors = () => {
     fetchMentors();
   }, []);
 
-  if (loading) return <div className="text-center mt-20"><Loading /></div>;
-  if (error) return <div className="text-red-500 text-center mt-20 font-medium">{error}</div>;
+  const filteredMentors = mentors.filter(mentor => {
+    const query = searchQuery.toLowerCase();
+    const nameMatch = mentor.userId.name.toLowerCase().includes(query);
+    const skillMatch = mentor.skills.some(skill => skill.name.toLowerCase().includes(query));
+    return nameMatch || skillMatch;
+  });
 
+  if (loading) return <div className="text-center mt-20"><Loading /></div>;
+  
   return (
     <div className="min-h-screen bg-brand-dark pt-24 pb-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
+      <div className="max-w-7xl mx-auto animate-fade-in">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Mentoring Hub</h1>
             <p className="text-brand-text-secondary">Find a mentor to guide you or become one yourself.</p>
@@ -44,20 +52,43 @@ const Mentors = () => {
           </Link>
         </div>
 
-        {mentors.length === 0 ? (
+        <div className="mb-10 relative">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-brand-text-muted" />
+          </div>
+          <input
+            type="text"
+            className="input pl-11 w-full md:w-1/2 max-w-md bg-brand-card focus:ring-brand-orange"
+            placeholder="Search by name or skill..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        {error && (
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-500 text-center font-medium">
+            {error}
+          </div>
+        )}
+
+        {filteredMentors.length === 0 && !error ? (
           <div className="text-center py-20 bg-brand-surface/30 rounded-2xl border border-brand-border">
-            <h3 className="text-xl font-medium text-white mb-2">No mentors found</h3>
-            <p className="text-brand-text-secondary">Be the first to join the mentorship program!</p>
+            <h3 className="text-xl font-medium text-white mb-2">{searchQuery ? 'No mentors found matching your search' : 'No mentors found'}</h3>
+            <p className="text-brand-text-secondary">{searchQuery ? 'Try adjusting your search terms.' : 'Be the first to join the mentorship program!'}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mentors.map((mentor) => (
-              <div key={mentor._id} className="card hover:border-brand-orange/50 transition-all duration-300 group">
+            {filteredMentors.map((mentor, index) => (
+              <div 
+                key={mentor._id} 
+                className="card hover:border-brand-orange/50 transition-all duration-300 group animate-slide-up"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
                 <div className="flex items-center mb-6">
                   <div className="relative">
                     <Avatar src={mentor.userId.avatar} alt={mentor.userId.name} size="lg" className="ring-2 ring-brand-border group-hover:ring-brand-orange/50 transition-all" />
                     {mentor.isActive && (
-                      <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 ring-2 ring-brand-card"></span>
+                      <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-mits-green ring-2 ring-brand-card"></span>
                     )}
                   </div>
                   <div className="ml-4">

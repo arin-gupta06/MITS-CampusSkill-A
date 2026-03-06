@@ -29,7 +29,7 @@ export const getMentorById = asyncHandler(async (req, res) => {
 // @route   POST /api/mentors/apply
 // @access  Private
 export const applyAsMentor = asyncHandler(async (req, res) => {
-  const { bio, skills } = req.body;
+  const { bio, skills, socialLinks, codingPlatforms } = req.body;
 
   let mentorProfile = await MentorProfile.findOne({ userId: req.user._id });
 
@@ -42,6 +42,8 @@ export const applyAsMentor = asyncHandler(async (req, res) => {
     userId: req.user._id,
     bio,
     skills: skills || [],
+    socialLinks: socialLinks || {},
+    codingPlatforms: codingPlatforms || {},
   });
 
   // Update user to be a mentor
@@ -54,7 +56,7 @@ export const applyAsMentor = asyncHandler(async (req, res) => {
 // @route   PUT /api/mentors/update
 // @access  Private
 export const updateMentorProfile = asyncHandler(async (req, res) => {
-  const { bio, isActive } = req.body;
+  const { bio, isActive, skills, socialLinks, codingPlatforms } = req.body;
 
   const mentorProfile = await MentorProfile.findOne({ userId: req.user._id });
 
@@ -65,10 +67,24 @@ export const updateMentorProfile = asyncHandler(async (req, res) => {
 
   if (bio !== undefined) mentorProfile.bio = bio;
   if (isActive !== undefined) mentorProfile.isActive = isActive;
+  if (socialLinks !== undefined) mentorProfile.socialLinks = socialLinks;
+  if (codingPlatforms !== undefined) mentorProfile.codingPlatforms = codingPlatforms;
+  if (skills !== undefined) {
+    // Preserve verification status for existing skills, add new ones as pending
+    const updatedSkills = skills.map(newSkill => {
+      const existing = mentorProfile.skills.find(s => s.name === newSkill.name);
+      if (existing) {
+        return { ...existing.toObject(), level: newSkill.level || existing.level };
+      }
+      return { name: newSkill.name, level: newSkill.level || 'beginner', verificationStatus: 'pending' };
+    });
+    mentorProfile.skills = updatedSkills;
+  }
 
   await mentorProfile.save();
 
-  res.status(200).json(mentorProfile);
+  const populated = await MentorProfile.findById(mentorProfile._id).populate('userId', 'name email avatar isMentor');
+  res.status(200).json(populated);
 });
 
 // @desc    Add skill to mentor profile

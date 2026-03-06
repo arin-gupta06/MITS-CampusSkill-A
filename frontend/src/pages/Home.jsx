@@ -56,21 +56,6 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className="pt-8 flex items-center gap-8 border-t border-white/10">
-              <div className="flex -space-x-4">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className={`w-12 h-12 rounded-full border-2 border-brand-dark flex items-center justify-center bg-gray-800 text-xs font-bold ${
-                    i === 4 ? 'bg-brand-orange text-white z-10' : 'bg-gray-700 z-0'
-                  }`}>
-                    {i === 4 ? '500+' : ''}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <p className="font-bold text-white text-lg">500+ Students</p>
-                <p className="text-gray-400 text-sm">Already joined the community</p>
-              </div>
-            </div>
           </div>
 
           <div className="relative hidden lg:block animate-float">
@@ -242,22 +227,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="py-20 bg-brand-surface border-y border-white/5">
-         <div className="wrapper">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-               {stats.map((s, i) => (
-                  <div key={i} className="text-center group">
-                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/5 text-gray-400 mb-4 group-hover:bg-brand-orange group-hover:text-white transition-colors">
-                        <s.icon size={20} />
-                     </div>
-                     <h3 className="text-4xl font-display font-bold text-white mb-1">{s.value}</h3>
-                     <p className="text-gray-400 text-sm uppercase tracking-wider">{s.label}</p>
-                  </div>
-               ))}
-            </div>
-         </div>
-      </section>
 
       {/* CTA */}
       <section className="py-24 relative overflow-hidden">

@@ -43,6 +43,7 @@ const Navbar = () => {
     { to: '/browse', label: 'Browse', icon: Search },
     { to: '/leaderboard', label: 'Leaderboard', icon: Trophy },
     { to: '/mentors', label: 'Mentors', icon: User },
+    { to: '/developers', label: 'Developers', icon: User },
   ];
 
   const authLinks = [

@@ -19,12 +19,17 @@ const mentorProfileSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        level: {
+          type: String,
+          enum: ['beginner', 'intermediate', 'advanced'],
+          default: 'beginner',
+        },
         isVerified: {
           type: Boolean,
           default: false,
         },
         verificationDoc: {
-          type: String, // file path or cloud URL
+          type: String,
         },
         verificationStatus: {
           type: String,
@@ -33,6 +38,19 @@ const mentorProfileSchema = new mongoose.Schema(
         },
       },
     ],
+    socialLinks: {
+      linkedin: { type: String, default: '' },
+      github: { type: String, default: '' },
+      twitter: { type: String, default: '' },
+      instagram: { type: String, default: '' },
+    },
+    codingPlatforms: {
+      leetcode: { type: String, default: '' },
+      hackerrank: { type: String, default: '' },
+      codeforces: { type: String, default: '' },
+      codechef: { type: String, default: '' },
+      gfg: { type: String, default: '' },
+    },
     rating: {
       type: Number,
       default: 0,

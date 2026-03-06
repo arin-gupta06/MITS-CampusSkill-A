@@ -19,6 +19,7 @@ import {
 import Mentors from './pages/Mentors';
 import MentorProfile from './pages/MentorProfile';
 import ApplyMentor from './pages/ApplyMentor';
+import Developers from './pages/Developers';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -86,6 +87,7 @@ const AppRoutes = () => {
         />
         <Route path="/browse" element={<BrowseTasks />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/developers" element={<Developers />} />
         <Route path="/user/:id" element={<Profile />} />
 
         {/* Protected Routes */}
