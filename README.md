@@ -1,6 +1,6 @@
 # MITS CampusSkill 🎓
 
-A comprehensive student talent marketplace platform where teachers and students collaborate through tasks, chat, and a credit-based reward system.
+A comprehensive student talent marketplace platform where teachers and students collaborate through tasks, chat, a credit-based reward system, and professional mentorship.
 
 ![MITS CampusSkill Banner](https://via.placeholder.com/800x200/1F2A8A/FFFFFF?text=MITS+CampusSkill)
 
@@ -9,9 +9,16 @@ A comprehensive student talent marketplace platform where teachers and students 
 ### For Students
 - **Browse Tasks**: Discover tasks posted by teachers and peers
 - **Take & Complete Tasks**: Work on real projects and earn credit points
+- **Mentorship**: Apply as a mentor or find a mentor to guide you
 - **Build Portfolio**: Showcase completed work on your profile
-- **Real-time Chat**: Communicate with task creators
+- **Real-time Chat**: Communicate with task creators and mentors
 - **Leaderboard**: Compete with peers and climb the rankings
+
+### For Mentors
+- **Become a Mentor**: Apply with your skills, proficiency levels, and social/coding profiles
+- **Manage Profile**: Edit your mentor profile, toggle availability, and update skills
+- **Guide Students**: Accept mentorship requests and conduct 1-on-1 sessions
+- **Social Integration**: Link your LinkedIn, GitHub, LeetCode, and other professional profiles
 
 ### For Teachers
 - **Post Tasks**: Create tasks with credit point rewards
@@ -22,28 +29,29 @@ A comprehensive student talent marketplace platform where teachers and students 
 ### Platform Features
 - 🔐 JWT Authentication with role-based access
 - 💬 Real-time chat via Socket.IO
-- 🌙 Dark mode support
+- 👨‍💻 Developer Team Showcase: Explore the team behind the platform
+- 🌙 Dark mode support with custom brand theme
 - 📱 Fully responsive design
-- ⭐ Rating and review system
+- ⭐ Multi-level rating and verification system
 - 🏆 Gamified credit points system
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 - **React 18** with Vite
-- **Tailwind CSS** for styling
+- **Tailwind CSS** for styling with custom brand tokens
 - **React Router DOM** for navigation
 - **Socket.IO Client** for real-time features
 - **Axios** for API calls
-- **Lucide React** for icons
-- **React Hot Toast** for notifications
+- **Lucide React** & **Heroicons** for iconography
+- **React Hot Toast** for modern notifications
 
 ### Backend
 - **Node.js** with Express
 - **MongoDB** with Mongoose
-- **JWT** for authentication
+- **JWT** for secure authentication
 - **Socket.IO** for real-time communication
-- **bcryptjs** for password hashing
+- **bcryptjs** for secure password hashing
 
 ## 🚀 Getting Started
 
@@ -117,6 +125,7 @@ MITS CampusSkill/
 │   │   │   ├── authController.js
 │   │   │   ├── taskController.js
 │   │   │   ├── userController.js
+│   │   │   ├── mentorController.js
 │   │   │   └── chatController.js
 │   │   ├── middleware/
 │   │   │   ├── auth.js
@@ -124,14 +133,18 @@ MITS CampusSkill/
 │   │   ├── models/
 │   │   │   ├── User.js
 │   │   │   ├── Task.js
+│   │   │   ├── MentorProfile.js
+│   │   │   ├── MentorshipRequest.js
 │   │   │   └── ChatRoom.js
 │   │   ├── routes/
 │   │   │   ├── authRoutes.js
 │   │   │   ├── taskRoutes.js
 │   │   │   ├── userRoutes.js
+│   │   │   ├── mentorRoutes.js
 │   │   │   └── chatRoutes.js
 │   │   ├── utils/
 │   │   │   ├── asyncHandler.js
+│   │   │   ├── sanitize.js
 │   │   │   └── tokenUtils.js
 │   │   └── server.js
 │   ├── package.json
@@ -148,6 +161,9 @@ MITS CampusSkill/
 │   │   └── index.css
 │   ├── index.html
 │   ├── package.json
+│   ├── tailwind.config.js
+│   └── vite.config.js
+```
 │   ├── vite.config.js
 │   └── tailwind.config.js
 └── README.md
